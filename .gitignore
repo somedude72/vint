@@ -1,0 +1,5 @@
+build/
+build-debug/
+.cache/
+.DS_Store/
+.idea/
