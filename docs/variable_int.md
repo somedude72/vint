@@ -47,7 +47,7 @@ An arbitrary precision integer type in C++. Provided by `variable_int.hpp`.
 * Getter for the raw array.
 * Returns a reference to the raw array.
 
-#### `vint::Int operator+ (const vint::Int &other) const`
+#### `Int operator+ (const vint::Int &other) const`
 
 * Addition operator for `vint::Int`.
 * Returns an `vint::Int` object representing the sum of `this` and `other`.
