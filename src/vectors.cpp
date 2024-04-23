@@ -68,25 +68,25 @@ void add_vectors(std::vector<uint8_t>& num_one,
     process_overflow(num_one);
 }
 
-std::vector<uint8_t> multiply_vectors(const std::vector<uint8_t>& num_one,
-                                      const std::vector<uint8_t>& num_two) {
-    std::vector<std::vector<uint8_t>> sum(num_two.size());
-    for (size_t i = 0; i < sum.size(); i++)
-        for (size_t j = 0; j < i; j++)
-            sum[i].push_back(0);
-
-    for (int64_t i = num_two.size() - 1; i >= 0; i--) {
-        for (int64_t j = num_one.size() - 1; j >= 0; j--)
-            sum[num_two.size() - i - 1].insert(
-                sum[num_two.size() - i - 1].begin(),
-                num_two[i] * num_one[j]
-            );
-        process_overflow(sum[num_two.size() - i - 1]);
+std::vector<uint8_t> multiply_vectors(const std::vector<uint8_t>& num1,
+                                      const std::vector<uint8_t>& num2) {
+    int n = num1.size();
+    int m = num2.size();
+    const int BASE = 10;
+    std::vector<uint8_t> result(n + m, 0);
+    for (int i = n - 1; i >= 0; i--) {
+        for (int j = m - 1; j >= 0; j--) {
+            int mul = num1[i] * num2[j];
+            int sum = mul + result[i + j + 1];
+            result[i + j] += sum / BASE;
+            result[i + j + 1] = sum % BASE;
+        }
     }
 
-    for (size_t i = 1; i < sum.size(); i++)
-        add_vectors(sum[0], std::move(sum[i]));
-    while (sum[0][0] == 0 && sum[0].size() != 1)
-        sum[0].erase(sum[0].begin());
-    return sum[0];
+    int i = 0;
+    while (i < n + m && result[i] == 0)
+        i++;
+    if (i == n + m)
+        return { 0 };
+    return std::vector<uint8_t>(result.begin() + i, result.end());
 }
