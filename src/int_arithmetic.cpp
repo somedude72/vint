@@ -2,171 +2,73 @@
 // This file contains definition for declarations
 // in ../include/variable_int.hpp
 
-#include <vector>
 #include "variable_int.hpp"
+#include <cstdint>
 
 namespace vint {
 
     Int Int::operator+(const Int& rhs) const {
-        Int ret;
-        if (m_storage.size() > rhs.m_storage.size()) {
-            int i = 0;
-            for (; i < rhs.m_storage.size(); i++) {
-                if (ret.m_storage.size() != i + 1)
-                    ret.m_storage.push_back(0);
-                if (ret.m_storage[i] != 0) { // previous carry
-                    ret.m_storage[i] = m_storage[i] + rhs.m_storage[i];
-                    if (ret.m_storage[i] <= m_storage[i]) // overflow (ie carry). <= in this case because we started with 1
-                        ret.m_storage.push_back(1);
-                } else { // no previous carry
-                    ret.m_storage[i] = m_storage[i] + rhs.m_storage[i];
-                    if (ret.m_storage[i] < m_storage[i]) // overflow (ie carry)
-                        ret.m_storage.push_back(1);
-                }
-            }
+        const auto& lhs = *this;
+        const auto& longer = rhs.m_storage.size() > lhs.m_storage.size()
+            ? rhs : lhs;
+        const auto& shorter = rhs.m_storage.size() <= lhs.m_storage.size()
+            ? rhs : lhs;
 
-            for (int j = i; j < m_storage.size(); j++) {
-                ret.m_storage.push_back(m_storage[i]);
+        Int ret = longer;
+        uint32_t carry = 0;
+        for (size_t i = 0; i < shorter.m_storage.size(); i++) {
+            if ((uint32_t) (ret.m_storage[i] + carry) < ret.m_storage[i]
+                || (uint32_t) (ret.m_storage[i] + shorter.m_storage[i]) < ret.m_storage[i]
+                || (uint32_t) (ret.m_storage[i] + shorter.m_storage[i] + carry) < ret.m_storage[i]) {
+                ret.m_storage[i] += (shorter.m_storage[i] + carry);
+                carry = 1;
+            } else {
+                ret.m_storage[i] += (shorter.m_storage[i] + carry);
+                carry = 0;
             }
-        } else {
-            int i = 0;
-            for (; i < m_storage.size(); i++) {
-                if (ret.m_storage.size() != i + 1)
-                    ret.m_storage.push_back(0);
-                if (ret.m_storage[i] != 0) { // previous carry
-                    ret.m_storage[i] = m_storage[i] + rhs.m_storage[i] + 1;
-                    if (ret.m_storage[i] <= m_storage[i]) { // overflow (ie carry). <= in this case because we started with 1
-                        ret.m_storage[i]++; // add one when overflow due to base conversion
-                        ret.m_storage.push_back(1);
-                    }
-                } else { // no previous carry
-                    ret.m_storage[i] = m_storage[i] + rhs.m_storage[i];
-                    if (ret.m_storage[i] < m_storage[i]) { // overflow (ie carry)
-                        ret.m_storage[i]++; // add one when overflow due to base conversion
-                        ret.m_storage.push_back(1);
-                    }
-                }
-            }
+        }
 
-            for (int j = i; j < rhs.m_storage.size(); j++) {
-                ret.m_storage.push_back(m_storage[i]);
+        if (carry == 0)
+            return ret;
+
+        for (size_t i = shorter.m_storage.size(); i <= ret.m_storage.size(); i++) {
+            if (i == ret.m_storage.size()) {
+                ret.m_storage.push_back(1);
+                break;
+            } else if (ret.m_storage[i] == UINT32_MAX) {
+                ret.m_storage[i] = 0;
+                continue;
+            } else {
+                ret.m_storage[i]++;
+                break;
             }
         }
 
         return ret;
     }
 
+
     Int& Int::operator+=(const Int& rhs) {
-        if (this == &rhs) {
-            *this = rhs + rhs;
-            return *this;
-        }
-
-        if (m_storage.size() > rhs.m_storage.size()) {
-            int i = 0;
-            for (; i < rhs.m_storage.size(); i++) {
-                if (m_storage.size() != i + 1)
-                    m_storage.push_back(0);
-                if (m_storage[i] != 0) { // previous carry
-                    m_storage[i] = m_storage[i] + rhs.m_storage[i];
-                    if (m_storage[i] <= m_storage[i]) // overflow (ie carry). <= in this case because we started with 1
-                        m_storage.push_back(1);
-                } else { // no previous carry
-                    m_storage[i] = m_storage[i] + rhs.m_storage[i];
-                    if (m_storage[i] < m_storage[i]) // overflow (ie carry)
-                        m_storage.push_back(1);
-                }
-            }
-
-            for (int j = i; j < m_storage.size(); j++) {
-                m_storage.push_back(m_storage[i]);
-            }
+        Int& lhs = *this;
+        if (&lhs == &rhs) {
+            lhs = rhs + rhs;
+            return lhs;
         } else {
-            int i = 0;
-            for (; i < m_storage.size(); i++) {
-                if (m_storage.size() != i + 1)
-                    m_storage.push_back(0);
-                if (m_storage[i] != 0) { // previous carry
-                    m_storage[i] = m_storage[i] + rhs.m_storage[i] + 1;
-                    if (m_storage[i] <= m_storage[i]) { // overflow (ie carry). <= in this case because we started with 1
-                        m_storage[i]++; // add one when overflow due to base conversion
-                        m_storage.push_back(1);
-                    }
-                } else { // no previous carry
-                    m_storage[i] = m_storage[i] + rhs.m_storage[i];
-                    if (m_storage[i] < m_storage[i]) { // overflow (ie carry)
-                        m_storage[i]++; // add one when overflow due to base conversion
-                        m_storage.push_back(1);
-                    }
-                }
-            }
-
-            for (int j = i; j < rhs.m_storage.size(); j++) {
-                m_storage.push_back(m_storage[i]);
-            }
+            lhs = lhs + rhs;
+            return lhs;
         }
-
-        return *this;
     }
+
 
     Int Int::operator++(int) {
         Int temp = *this;
-        if (m_storage[0] < UINT32_MAX - 1) {
-            m_storage[0]++;
-            return temp;
-        }
-
-        for (int i = 0; i < m_storage.size(); i++) {
-            if (m_storage[i] >= UINT32_MAX - 1 && i != m_storage.size() - 1) {
-                m_storage[i]++;
-                continue;
-            }
-
-            if (m_storage[i] < UINT32_MAX - 1 && i != m_storage.size() - 1) {
-                m_storage[i]++;
-                break;
-            }
-
-            if (m_storage[i] < UINT32_MAX - 1) {
-                m_storage[i]++;
-                break;
-            } else {
-                m_storage[i] = 0;
-                m_storage.push_back(1);
-                break;
-            }
-        }
-
+        *this += 1;
         return temp;
     }
 
-    Int Int::operator++() {
-        if (m_storage[0] < UINT32_MAX - 1) {
-            m_storage[0]++;
-            return *this;
-        }
 
-        for (int i = 0; i < m_storage.size(); i++) {
-            if (m_storage[i] >= UINT32_MAX - 1 && i != m_storage.size() - 1) {
-                m_storage[i]++;
-                continue;
-            }
-
-            if (m_storage[i] < UINT32_MAX - 1 && i != m_storage.size() - 1) {
-                m_storage[i]++;
-                break;
-            }
-
-            if (m_storage[i] < UINT32_MAX - 1) {
-                m_storage[i]++;
-                break;
-            } else {
-                m_storage[i] = 0;
-                m_storage.push_back(1);
-                break;
-            }
-        }
-
+    Int& Int::operator++() {
+        *this += 1;
         return *this;
     }
 
