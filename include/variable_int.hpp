@@ -28,9 +28,7 @@ namespace vint {
 
         std::string to_string() const;
 
-        size_t digits() const;
-
-        size_t size() const;
+        size_t bytes() const;
 
         const std::vector<uint32_t>& raw() const;
 
@@ -52,24 +50,23 @@ namespace vint {
 
     public: /* Arithmetic operators */
 
-        Int operator+(const Int& other) const;
+      Int operator+(const Int &other) const;
 
-        Int& operator+=(const Int& other);
+      Int &operator+=(const Int &other);
 
-        Int operator++(int);
+      Int operator++(int);
 
-        Int operator++();
+      Int& operator++();
 
-        // Int operator-(const Int& other) const;
+      // Int operator-(const Int& other) const;
 
-        // Int operator*(const Int& other);
+      // Int operator*(const Int& other);
 
-        // Int operator/(const Int& other);
+      // Int operator/(const Int& other);
 
-        // Int operator%(const Int& other);
+      // Int operator%(const Int& other);
 
     private:
-        static constexpr uint32_t STORAGE_BASE = 4294967295;
         enum sign { negative, positive };
         bool m_sign = sign::positive;
         std::vector<uint32_t> m_storage = { };
