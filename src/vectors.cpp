@@ -43,25 +43,37 @@ add_vectors(const std::vector<uint8_t>& num_one,
 
 
 std::vector<uint8_t>
-multiply_vectors(const std::vector<uint8_t>& num1,
-                 const std::vector<uint8_t>& num2) {
-    size_t n = num1.size();
-    size_t m = num2.size();
-    const int BASE = 10;
-    std::vector<uint8_t> ret(n + m, 0);
-    for (int32_t i = n - 1; i >= 0; i--) {
-        for (int32_t j = m - 1; j >= 0; j--) {
-            int32_t mul = num1[i] * num2[j];
-            int32_t sum = mul + ret[i + j + 1];
-            ret[i + j] += sum / BASE;
-            ret[i + j + 1] = sum % BASE;
-        }
+multiply_vectors(const std::vector<uint8_t>& num1, uint64_t multiplier) {
+    std::vector<uint64_t> temp(num1.size());
+    for (size_t i = 0; i < temp.size(); i++) {
+        // Load num1 into a uint64_t vector for simplicity
+        temp[i] = (uint64_t) num1[i];
+        temp[i] *= multiplier;
     }
 
-    auto beg_nonzero = std::find_if_not(
-        ret.begin(), ret.end(),
-        [](uint8_t i) { return i == 0; }); // Remove leading zeros
-    return beg_nonzero == ret.end()
-        ? std::vector<uint8_t>{ 0 }
-        : std::vector<uint8_t>(beg_nonzero, ret.end());
+    uint64_t prev_carry = 0;
+    uint64_t curr_carry = 0;
+    for (int64_t i = temp.size() - 1; i >= 0; i--) {
+        // Compute each digit while keeping track of carries
+        curr_carry = temp[i] / 10;
+        temp[i] %= 10;
+        temp[i] += prev_carry;
+
+        curr_carry += (temp[i] / 10);
+        temp[i] %= 10;
+        prev_carry = curr_carry;
+    }
+
+    while (prev_carry) {
+        // If any carries are left, keep inserting them at the front
+        temp.insert(temp.begin(), prev_carry % 10);
+        prev_carry /= 10;
+    }
+
+    // Truncate leading zeros and return in a uint8_t vector
+    auto beg_nonzero = std::find_if_not(temp.begin(), temp.end(),
+        [](uint64_t digit) { return digit == 0; });
+    std::vector<uint8_t> ret(beg_nonzero, temp.end());
+    return ret.size() == 0
+        ? std::vector<uint8_t>{ 0 } : ret;
 }

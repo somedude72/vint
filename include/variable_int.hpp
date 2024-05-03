@@ -1,9 +1,3 @@
-/**
- * An arbitrary precision integer and floating point library in C++.
- *
- * Copyright (C) 2024  Zichen Qin
- */
-
 #ifndef VARIABLE_INT_HPP
 #define VARIABLE_INT_HPP
 

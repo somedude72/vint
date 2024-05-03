@@ -1,11 +1,10 @@
-// Constructor implementation/definition for vint::Int
+// Constructor implementation for vint::Int
 // This file contains definition for declarations
-// in ../include/variable_int.hpp
+// in variable_int.hpp
 
 #include <cstdlib>
 #include <cstdint>
 #include <vector>
-#include <iostream>
 #include "variable_int.hpp"
 
 namespace vint {
@@ -26,7 +25,7 @@ namespace vint {
     }
 
     // Int::Int(const std::string& number) {
-    //     [TODO] IMPLEMENT STRING CONSTRUCTOR
+    //     TODO: IMPLEMENT STRING CONSTRUCTOR
     // }
 
 }
