@@ -1,6 +1,6 @@
-// Class methods (conversion, utility) definition for vint::Int
-// This file contains definition for declarations in
-// ../include/variable_int.hpp
+// Class methods (conversion, utility) implementation for vint::Int
+// This file contains definition for declarations
+// in variable_int.hpp
 
 #include <cstdint>
 
@@ -35,16 +35,12 @@ namespace vint {
 
     std::string
     Int::to_string() const {
-        // Storage base (2^32) in vector
-        static const std::vector<uint8_t>
-            STORAGE_BASE_V = { 4, 2, 9, 4, 9, 6, 7, 2, 9, 6 };
         std::vector<uint8_t> ret = { 0 };
         std::vector<uint8_t> power = { 1 };
         for (const auto& digit : m_storage) {
-            auto vec_digits = int_to_vec(digit);
-            auto addend = multiply_vectors(power, vec_digits);
+            auto addend = multiply_vectors(power, digit);
             ret = add_vectors(ret, addend);
-            power = multiply_vectors(power, STORAGE_BASE_V);
+            power = multiply_vectors(power, (uint64_t) UINT32_MAX + 1);
         }
 
         std::string ret_string;

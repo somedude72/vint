@@ -1,8 +1,8 @@
 // Internal/private header file for vector operation (each
 // vector represents a positive integer).
 
-#ifndef VOPERATORS_HPP
-#define VOPERATORS_HPP
+#ifndef VECTORS_HPP
+#define VECTORS_HPP
 
 #include <vector>
 #include <cstdint>
@@ -12,12 +12,11 @@ int_to_vec(const uint32_t& integer);
 
 
 std::vector<uint8_t>
-multiply_vectors(const std::vector<uint8_t>& num_one,
-                 const std::vector<uint8_t>& num_two);
+multiply_vectors(const std::vector<uint8_t>& num1, uint64_t multiplier);
 
 
 std::vector<uint8_t>
 add_vectors(const std::vector<uint8_t>& num_one,
             const std::vector<uint8_t>& num_two);
 
-#endif // VOPERATORS_HPP
+#endif // VECTORS_HPP
