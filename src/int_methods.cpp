@@ -20,7 +20,6 @@ namespace vint {
         return (m_sign == sign::negative) ? -ret : ret;
     }
 
-
     int32_t Int::to_int() const {
         int32_t ret = 0;
         int32_t power = 1;
@@ -31,7 +30,6 @@ namespace vint {
 
         return (m_sign == sign::negative) ? -ret : ret;
     }
-
 
     std::string
     Int::to_string() const {
@@ -50,14 +48,60 @@ namespace vint {
             ? '-' + ret_string : ret_string;
     }
 
-
     const std::vector<uint32_t>&
     Int::raw() const {
         return m_storage;
     }
 
-
     size_t Int::bytes() const {
         return sizeof(uint32_t) * m_storage.size();
+    }
+
+    bool Int::operator==(const Int& rhs) const {
+        return m_sign == rhs.m_sign &&
+               m_storage == rhs.m_storage;
+    }
+
+    bool Int::operator!=(const Int& rhs) const {
+        return !(rhs == *this);
+    }
+
+    bool Int::operator<(const Int& rhs) const {
+        if (m_sign == sign::negative && rhs.m_sign == sign::positive)
+            return true;
+        if (m_sign == sign::positive && rhs.m_sign == sign::negative)
+            return false;
+        if (m_storage.size() < rhs.m_storage.size())
+            return true;
+        if (m_storage.size() > rhs.m_storage.size())
+            return false;
+        for (int64_t i = m_storage.size() - 1; i >= 0; i--) {
+            if (m_sign == sign::positive && m_storage[i] < rhs.m_storage[i])
+                return true;
+            if (m_sign == sign::positive && m_storage[i] > rhs.m_storage[i])
+                return false;
+            if (m_sign == sign::negative && m_storage[i] > rhs.m_storage[i])
+                return true;
+            if (m_sign == sign::negative && m_storage[i] < rhs.m_storage[i])
+                return false;
+        }
+
+        return false;
+    }
+
+    bool Int::operator>(const Int& rhs) const {
+        return !(*this < rhs);
+    }
+
+    bool Int::operator<=(const Int& rhs) const {
+        return !(*this > rhs);
+    }
+
+    bool Int::operator>=(const Int& rhs) const {
+        return !(*this < rhs);
+    }
+
+    bool Int::operator!() const {
+        return *this == 0;
     }
 }

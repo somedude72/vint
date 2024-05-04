@@ -18,7 +18,7 @@ namespace vint {
         Int ret = longer;
         uint32_t carry = 0;
         for (size_t i = 0; i < shorter.m_storage.size(); i++) {
-            // Add from left to right (least significant digits first) while keeping track of carries
+            // Add from left to right (the least significant digits first) while keeping track of carries
             if ((uint32_t) (ret.m_storage[i] + carry) < ret.m_storage[i]
                 || (uint32_t) (ret.m_storage[i] + shorter.m_storage[i]) < ret.m_storage[i]
                 || (uint32_t) (ret.m_storage[i] + shorter.m_storage[i] + carry) < ret.m_storage[i]) {

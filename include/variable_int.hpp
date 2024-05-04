@@ -14,6 +14,8 @@ namespace vint {
 
         Int(int64_t number);
 
+        // explicit Int(const std::string& number);
+
     public: /* Type conversion operators */
 
         int32_t to_int() const;
@@ -44,21 +46,37 @@ namespace vint {
 
     public: /* Arithmetic operators */
 
-      Int operator+(const Int &other) const;
+        Int operator+(const Int &other) const;
 
-      Int &operator+=(const Int &other);
+        Int &operator+=(const Int &other);
 
-      Int operator++(int);
+        Int operator++(int);
 
-      Int& operator++();
+        Int& operator++();
 
-      // Int operator-(const Int& other) const;
+        // Int operator-(const Int& other) const;
 
-      // Int operator*(const Int& other);
+        // Int operator*(const Int& other);
 
-      // Int operator/(const Int& other);
+        // Int operator/(const Int& other);
 
-      // Int operator%(const Int& other);
+        // Int operator%(const Int& other);
+
+    public: /* Relational operators */
+
+        bool operator==(const Int& rhs) const;
+
+        bool operator!=(const Int& rhs) const;
+
+        bool operator<(const Int& rhs) const;
+
+        bool operator>(const Int& rhs) const;
+
+        bool operator<=(const Int& rhs) const;
+
+        bool operator>=(const Int& rhs) const;
+
+        bool operator!() const;
 
     private:
         enum sign { negative, positive };
