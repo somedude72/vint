@@ -28,22 +28,6 @@ namespace vint {
 
         const std::vector<uint32_t>& raw() const;
 
-    public: /* Comparison operators [UNIMPLEMENTED] */
-
-        // bool operator==(const Int& other);
-
-        // bool operator<=(const Int& other);
-
-        // bool operator>=(const Int& other);
-
-        // bool operator<(const Int& other);
-
-        // bool operator>(const Int& other);
-
-        // bool operator!=(const Int& other);
-
-        // bool operator!();
-
     public: /* Arithmetic operators */
 
         Int operator+(const Int &other) const;
