@@ -11,7 +11,6 @@ namespace vint {
 
     Int::Int() = default;
 
-
     Int::Int(int64_t number) {
         if (number < 0)
             m_sign = sign::negative;
@@ -25,7 +24,12 @@ namespace vint {
     }
 
     // Int::Int(const std::string& number) {
-    //     TODO: IMPLEMENT STRING CONSTRUCTOR
+    //     if (number[0] == '-')
+    //         m_sign = sign::negative;
+    //     while (number != "0") {
+    //         m_storage.push_back(mod_vectors(number, (int64_t) (UINT32_MAX) + 1));
+    //         divide_vectors(number, (int64_t) (UINT32_MAX) + 1);
+    //     }
     // }
 
 }
