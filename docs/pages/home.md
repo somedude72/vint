@@ -14,7 +14,7 @@ For an overview of some basic information of this library to get you started, ch
 
 ## Quickstart
 
-The following tutorial will install and setup the vint library in a CMake project as well as demonstrate basic examples and usages of this library. Make sure you have both CMake and Make installed and on your path before continuing. At least c++11 is required to compile vint.
+The following tutorial will install and set up the vint library in a CMake project as well as demonstrate basic examples and usages of this library. Make sure you have both CMake and Make installed and on your path before continuing. At least c++11 is required to compile vint.
 
  * Add the library as a git submodule
 
