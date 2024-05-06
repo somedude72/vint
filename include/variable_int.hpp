@@ -14,7 +14,7 @@ namespace vint {
 
         Int(int64_t number);
 
-        // explicit Int(const std::string& number);
+        explicit Int(const std::string& number);
 
     public: /* Type conversion operators */
 
