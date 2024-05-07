@@ -31,8 +31,11 @@ namespace vint {
         return (m_sign == sign::negative) ? -ret : ret;
     }
 
-    std::string
-    Int::to_string() const {
+    bool Int::to_bool() const {
+        return !(*this);
+    }
+
+    std::string Int::to_string() const {
         std::vector<uint8_t> ret = { 0 };
         std::vector<uint8_t> power = { 1 };
         for (const auto& digit : m_storage) {
@@ -102,6 +105,6 @@ namespace vint {
     }
 
     bool Int::operator!() const {
-        return *this == 0;
+        return *this != 0;
     }
 }

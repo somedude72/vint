@@ -22,6 +22,8 @@ namespace vint {
 
         int64_t to_long_long() const;
 
+        bool to_bool() const;
+
         std::string to_string() const;
 
         size_t bytes() const;
@@ -30,15 +32,15 @@ namespace vint {
 
     public: /* Arithmetic operators */
 
-        Int operator+(const Int &other) const;
+        Int operator+(const Int& rhs) const;
 
-        Int &operator+=(const Int &other);
+        Int &operator+=(const Int& rhs);
 
         Int operator++(int);
 
         Int& operator++();
 
-        // Int operator-(const Int& other) const;
+        Int operator-(const Int& rhs) const;
 
         // Int operator*(const Int& other);
 

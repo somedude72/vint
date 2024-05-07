@@ -31,8 +31,9 @@ namespace vint {
         std::vector<uint8_t> num_vec(number.size());
         for (size_t i = num_start; i < num_vec.size(); i++)
             num_vec[i] = number[i] - '0';
-        while (num_vec != std::vector<uint8_t>({}))
+        while (!num_vec.empty()) {
             m_storage.push_back(divide_vectors(num_vec, (uint64_t) (UINT32_MAX) + 1));
+        }
     }
 
 }

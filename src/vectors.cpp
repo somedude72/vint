@@ -86,52 +86,36 @@ std::vector<uint8_t> multiply_vectors(const std::vector<uint8_t>& num1, uint64_t
     }
 
     // Truncate leading zeros and return in a uint8_t vector
-    auto beg_nonzero = std::find_if_not(temp.begin(), temp.end(),
-        [](uint64_t digit) { return digit == 0; });
-    std::vector<uint8_t> ret(beg_nonzero, temp.end());
-    return ret.empty()
-        ? std::vector<uint8_t>{ 0 } : ret;
-}
-
-uint32_t divide_vectors(std::vector<uint8_t>& num, uint64_t divisor) {
-    std::vector<uint8_t> quotient(num.size());
-    // Num.size should remain constant for the loop to work
-    for (size_t i = 0; i < num.size(); i++) {
-        // Load the dividend into an integer to work with easier
-        uint64_t dividend = vec_to_int(std::vector<uint8_t>(num.begin(), num.begin() + i + 1));
-
-        quotient[i] = dividend / divisor;
-        uint64_t subtract = quotient[i] * divisor;
-        uint64_t new_dividend = dividend - subtract;
-
-        // Insert zero in front to retain num.size
-        std::vector<uint8_t> dividend_vec = int_to_vec(new_dividend);
-        for (size_t j = 0; j <= i; j++) {
-            if (j < i - dividend_vec.size() + 1) {
-                num[j] = 0;
-            } else {
-                num[j] = dividend_vec[j - (i - dividend_vec.size() + 1)];
-            }
+    int64_t beg_nonzero = temp.size();
+    for (size_t i = 0; i < temp.size(); i++) {
+        if (temp[i] != 0) {
+            beg_nonzero = i;
+            break;
         }
     }
 
-    auto beg_quotient_nonzero = std::find_if_not(
-        quotient.begin(), quotient.end(), 
-        [](uint8_t& digit) { return digit == 0; }
-    );
+    temp.erase(temp.begin(), temp.begin() + beg_nonzero);
+    return temp.empty()
+        ? std::vector<uint8_t>{ 0 } : std::vector<uint8_t>(temp.begin(), temp.end());
+}
 
-    auto beg_mod_nonzero = std::find_if_not(
-        num.begin(), num.end(), 
-        [](uint8_t& digit) { return digit == 0; }
-    );
+uint64_t divide_vectors(std::vector<uint8_t>& dividend, uint64_t divisor) {
+    uint64_t remainder = 0;
 
-    std::string temp_mod;
-    for (auto it = beg_mod_nonzero; it != num.end(); it++)
-        temp_mod += (char) ((uint32_t) *it + '0');
-    if (temp_mod.empty())
-        temp_mod = '0';
-    uint32_t mod = std::stoll(temp_mod);
+    for (size_t i = 0; i < dividend.size(); i++) {
+        uint64_t dividend_part = remainder * 10 + dividend[i];
+        dividend[i] = dividend_part / divisor;
+        remainder = dividend_part % divisor;
+    }
 
-    num = std::vector<uint8_t>(beg_quotient_nonzero, quotient.end());
-    return mod;
+    int64_t beg_nonzero = dividend.size();
+    for (size_t i = 0; i < dividend.size(); i++) {
+        if (dividend[i] != 0) {
+            beg_nonzero = i;
+            break;
+        }
+    }
+
+    dividend.erase(dividend.begin(), dividend.begin() + beg_nonzero);
+    return remainder;
 }
