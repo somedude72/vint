@@ -40,14 +40,16 @@ add_end = time.perf_counter_ns()
 print(f"Addition took {(add_end - add_beg) / 1000:.0f}ms")
 ```
 
-The following chart shows the performance difference between the vint library and Python's int object when N grows. To ensure that no performance has been lost from real time interpreting, the Python script has been saved on disk and therefore compiled into bytecode before its run. The right most column showcases the performance difference between vint library and Python in percentage (e.g. `+55%` means that the vint library is 55% faster than Python). Note the time shown is a winsorized average of 5 test runs.
+The following chart shows the performance difference between the vint library and Python's int object when N grows. To ensure that no performance has been lost from real time interpreting, the Python script has been saved on disk and therefore compiled into bytecode before its run. The right most column showcases the performance difference between vint library and Python in percentage (e.g. `+55%` means that the vint library is 55% faster than Python, and `-6.4x` means that vint is 6400% slower than Python). Note the time shown is a winsorized average of 5 test runs.
 
 | N         |    Vint addition |    Python addition |   Difference |
 |:----------|-----------------:|-------------------:|-------------:|
-| 1,000     |             56μs |               82μs |         +46% |
-| 10,000    |          1,909µs |            2,517µs |         +31% |
-| 100,000   |            141ms |              177ms |         +26% |
+| 1,000     |            131μs |               82μs |         -59% |
+| 10,000    |          3,264µs |            2,517µs |         -29% |
+| 100,000   |            158ms |              177ms |         +11% |
 | 1,000,000 |         14,188ms |           17,474ms |         +23% |
+
+Of course, smaller values of N (and time) should always be taken with a grain of salt, since the overhead from the various operating system processes as well as the timer itself would cause the end result to be unreliable. 
 
 ## Conversion Performance
 
@@ -58,6 +60,6 @@ Because conversion to string is the only way to print without integer overflow i
 | 300       |             54μs |                2μs |      -27.00x |
 | 3,000     |          3,314μs |              123μs |      -26.94x |
 | 30,000    |            309ms |                8ms |      -38.62x |
-| 300,000   |         35,341ms |               29ms |    -1218.65x |
+| 300,000   |         34,641ms |               29ms |    -1194.52x |
 
 As one can tell, vint's integer to string conversion function is exponentially slower than Python's implementation. This is one area (who knew) that vint could improve.
