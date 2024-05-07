@@ -77,4 +77,44 @@ namespace vint {
         return *this;
     }
 
+    Int Int::operator-(const Int& rhs) const {
+        // Define aliases for convenience and readability
+        const auto& lhs = *this;
+        const auto& longer = rhs.m_storage.size() > lhs.m_storage.size()
+            ? rhs : lhs;
+        const auto& shorter = rhs.m_storage.size() <= lhs.m_storage.size()
+            ? rhs : lhs;
+
+        Int ret = longer;
+        uint32_t borrow = 0;
+        for (size_t i = 0; i < shorter.m_storage.size(); i++) {
+            // Add from left to right (the least significant digits first) while keeping track of carries
+            if ((uint32_t) (ret.m_storage[i] - borrow) > ret.m_storage[i]
+                || (uint32_t) (ret.m_storage[i] - shorter.m_storage[i]) > ret.m_storage[i]
+                || (uint32_t) (ret.m_storage[i] - shorter.m_storage[i] - borrow) > ret.m_storage[i]) {
+                // If there is a carry, simply add onto the ret (taking advantage of integer overflow)
+                ret.m_storage[i] -= (shorter.m_storage[i] + borrow);
+                borrow = 1;
+            } else {
+                // If there is not a carry, add and set carry to 0
+                ret.m_storage[i] -= (shorter.m_storage[i] + borrow);
+                borrow = 0;
+            }
+        }
+
+        if (borrow == 0)
+            return ret;
+
+        for (size_t i = shorter.m_storage.size(); i <= ret.m_storage.size(); i++) {
+            if (ret.m_storage[i] == 0) {
+                ret.m_storage[i] = UINT32_MAX;
+                continue;
+            } else {
+                ret.m_storage[i]--;
+                break;
+            }
+        }
+        
+        return ret;
+    }
 }
