@@ -40,7 +40,7 @@ add_end = time.perf_counter_ns()
 print(f"Addition took {(add_end - add_beg) / 1000:.0f}ms")
 ```
 
-The following chart shows the performance difference between the vint library and Python's int object when N grows. To ensure that no performance has been lost from real time interpreting, the Python script has been saved on disk and therefore compiled into bytecode before its run. The right most column showcases the performance difference between vint library and Python in percentage (e.g. `+55%` means that the vint library is 55% faster than Python, and `-6.4x` means that vint is 6400% slower than Python). Note the time shown is a winsorized average of 5 test runs.
+The following chart shows the performance difference between the vint library and Python's int object when N grows. To ensure that no performance has been lost from real time interpreting, the Python script has been saved on disk and therefore compiled into bytecode before it's run. The right most column showcases the performance difference between vint library and Python in percentage (e.g. `+55%` means that the vint library is 55% faster than Python, and `-6.4x` means that vint is 6400% slower than Python). Note the time shown is a winsorized average of 5 test runs.
 
 | N         |    Vint addition |    Python addition |   Difference |
 |:----------|-----------------:|-------------------:|-------------:|
