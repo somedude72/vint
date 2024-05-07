@@ -63,16 +63,16 @@ int main() {
 Below is a list of features planned for this library. The checkmark next to them represents their rough status in development (a checkmark means that it is already implemented, no checkmark means that the feature is currently being worked on). This roadmap is only a rough to-do list for this repository, and may change without notice at any point in time.
 
  - [x] Integer addition
- - [ ] Integer subtraction
+ - [x] Integer subtraction
  - [ ] Integer multiplication
  - [ ] Integer division
- - [ ] Integer `std::string` constructor
+ - [ ] Integer modulo operator
+ - [x] Integer `std::string` constructor
  - [x] Integer conversion methods
 
 Below is a list of features that is not currently being worked on, however may be added to the repository.
 
  - [ ] Floating point numbers
- - [ ] Integer modulo operator
  - [ ] Integer math functions
 
 ## About
