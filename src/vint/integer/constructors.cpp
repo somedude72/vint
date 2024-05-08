@@ -5,8 +5,8 @@
 #include <cstdlib>
 #include <cstdint>
 #include <vector>
-#include "vectors.hpp"
-#include "variable_int.hpp"
+#include "utils/vectors.hpp"
+#include "vint/integer.hpp"
 
 namespace vint {
 

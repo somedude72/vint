@@ -4,8 +4,8 @@
 
 #include <cstdint>
 
-#include "variable_int.hpp"
-#include "vectors.hpp"
+#include "vint/integer.hpp"
+#include "utils/vectors.hpp"
 
 namespace vint {
 

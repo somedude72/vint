@@ -1,5 +1,5 @@
-#include "variable_int.hpp"
-#include "variable_math.hpp"
+#include "vint/integer.hpp"
+#include "vint/math.hpp"
 
 namespace vint {
 
