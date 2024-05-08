@@ -22,9 +22,9 @@ namespace vint {
 
         int64_t to_long_long() const;
 
-        bool to_bool() const;
-
         std::string to_string() const;
+
+        bool to_bool() const;
 
         size_t bytes() const;
 
@@ -34,7 +34,7 @@ namespace vint {
 
         Int operator+(const Int& rhs) const;
 
-        Int &operator+=(const Int& rhs);
+        Int& operator+=(const Int& rhs);
 
         Int operator++(int);
 
@@ -42,11 +42,11 @@ namespace vint {
 
         Int operator-(const Int& rhs) const;
 
-        // Int operator*(const Int& other);
+        Int& operator-=(const Int& rhs);
 
-        // Int operator/(const Int& other);
+        Int operator--(int);
 
-        // Int operator%(const Int& other);
+        Int& operator--();
 
     public: /* Relational operators */
 
@@ -63,7 +63,11 @@ namespace vint {
         bool operator>=(const Int& rhs) const;
 
         bool operator!() const;
-
+    
+    private:
+        friend Int _add_vint_abs(const Int& lhs, const Int& rhs);
+        friend Int _sub_vint_abs(const Int& lhs, const Int& rhs);
+        friend Int abs(const Int& value);
     private:
         enum sign { negative, positive };
         bool m_sign = sign::positive;

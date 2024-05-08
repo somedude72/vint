@@ -5,10 +5,12 @@ set(CMAKE_CXX_STANDARD 11)
 
 add_library(
     vint
-    src/int_constructors.cpp
-    src/int_arithmetic.cpp
-    src/int_methods.cpp
+    src/variable_int/constructors.cpp
+    src/variable_int/arithmetic.cpp
+    src/variable_int/methods.cpp
+    src/variable_math.cpp
     src/vectors.cpp
 )
 
 target_include_directories(vint PUBLIC include)
+target_include_directories(vint PRIVATE src)
