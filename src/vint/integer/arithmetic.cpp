@@ -2,8 +2,8 @@
 // This file contains definition for declarations
 // in variable_int.hpp
 
-#include "variable_int.hpp"
-#include "variable_math.hpp"
+#include "vint/integer.hpp"
+#include "vint/math.hpp"
 #include <cstdint>
 
 namespace vint {
