@@ -25,12 +25,18 @@ namespace vint {
     }
 
     Int::Int(const std::string& number) {
+        if (number.empty())
+            m_storage = { 0 };
+        if (number == "-0")
+            m_storage = { 0 };
         if (number[0] == '-')
             m_sign = sign::negative;
+            
         size_t num_start = (m_sign == sign::negative) ? 1 : 0;
-        std::vector<uint8_t> num_vec(number.size());
-        for (size_t i = num_start; i < num_vec.size(); i++)
-            num_vec[i] = number[i] - '0';
+        std::vector<uint8_t> num_vec(number.size() - num_start);
+        for (size_t i = num_start; i < number.size(); i++)
+            num_vec[i - num_start] = number[i] - '0';
+    
         while (!num_vec.empty()) {
             m_storage.push_back(divide_vectors(num_vec, (uint64_t) (UINT32_MAX) + 1));
         }
