@@ -1,7 +1,12 @@
-#include "vint/integer.hpp"
+#ifndef VINT_MATH_HPP
+#define VINT_MATH_HPP
+
+#include "integer.hpp"
 
 namespace vint {
 
-    Int abs(const vint::Int& value);
+    Integer abs(const Integer& value);
     
 }
+
+#endif // VINT_MATH_HPP
