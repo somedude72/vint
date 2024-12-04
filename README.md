@@ -8,6 +8,4 @@ This library is currently in pre-alpha development: API will change and break wi
 
 ## Getting Started
 
-Head over to the [quickstart guide](https://somedudex.github.io/vint/home#quickstart) for a step by step guide on the installation of this library. Alternatively, check out the [tutorial](https://somedudex.github.io/vint/tutorial) to see some basic usages of the features provided by vint.
-
-Vint is inspired by and implemented similar to Python's integer object. Please refer to the [documentation page](https://somedudex.github.io/vint/home) for more information on its implementation.
+Head over to the [documentation page](https://somedudex.github.io/vint/home) for more information on the installation and usage of vint. Then, check out the [tutorial](https://somedudex.github.io/vint/tutorial) to see some basic usages of the features provided by vint.
