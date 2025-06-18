@@ -24,7 +24,7 @@ namespace vint {
             m_sign = sign::negative;
         if (number == 0)
             m_storage.push_back(0);
-        int_to_storage(number, m_storage);
+        ll_to_storage(number, m_storage);
     }
 
     /**
@@ -57,9 +57,7 @@ namespace vint {
      * is greater than INT64_MAX, the resulting output will overflow.
      */
     int64_t Integer::to_long_long() const {
-        int64_t temp;
-        storage_to_int(m_storage, temp, m_sign);
-        return temp;
+        return storage_to_ll(m_storage, m_sign);
     }
 
     /**
@@ -67,9 +65,7 @@ namespace vint {
      * is greater than INT32_MAX, the resulting output will overflow.
      */
     int32_t Integer::to_int() const {
-        int64_t temp;
-        storage_to_int(m_storage, temp, m_sign);
-        return static_cast<int32_t>(temp);
+        return static_cast<int32_t>(storage_to_ll(m_storage, m_sign));
     }
 
     /**
@@ -80,9 +76,7 @@ namespace vint {
      * The time complexity of this method is quadratic.
      */
     std::string Integer::to_string() const {
-        std::string temp;
-        storage_to_str(m_storage, temp, m_sign);
-        return temp;
+        return storage_to_str(m_storage, m_sign);
     }
 
     /**
@@ -110,7 +104,7 @@ namespace vint {
             return true;
         if (m_storage.size() > comp.m_storage.size())
             return false;
-        for (int64_t i = m_storage.size() - 1; i >= 0; i--) {
+        for (size_t i = m_storage.size() - 1; i--;) {
             if (m_sign == sign::positive && m_storage[i] < comp.m_storage[i])
                 return true;
             if (m_sign == sign::negative && m_storage[i] < comp.m_storage[i])
