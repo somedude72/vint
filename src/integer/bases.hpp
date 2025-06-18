@@ -12,11 +12,11 @@
 #include <vector>
 
 namespace vint {
-    void int_to_storage(int64_t number, std::vector<uint32_t>& storage);
+    void ll_to_storage(int64_t number, std::vector<uint32_t>& storage);
     void str_to_storage(std::string number, std::vector<uint32_t>& storage);
     
-    void storage_to_int(const std::vector<uint32_t>& storage, int64_t& number, bool negative);
-    void storage_to_str(const std::vector<uint32_t>& storage, std::string& number, bool negative);
+    int64_t storage_to_ll(const std::vector<uint32_t>& storage, bool negative);
+    std::string storage_to_str(const std::vector<uint32_t>& storage, bool negative);
 }
 
 #endif // BASES_HPP

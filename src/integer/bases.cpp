@@ -16,24 +16,24 @@ namespace vint {
      */
     static std::vector<uint8_t> add_arrays(const std::vector<uint8_t>& augend,
                                            const std::vector<uint8_t>& addend) {
-        std::vector<uint8_t> ret;
+        std::vector<uint8_t> result;
         const size_t size = std::max(augend.size(), addend.size());
         uint8_t carry = 0;
 
-        ret.reserve(size);
+        result.reserve(size);
         for (size_t i = 0; i < size; ++i) {
             constexpr int BASE = 10;
             uint8_t digit1 = (i < augend.size()) ? augend[augend.size() - 1 - i] : 0;
             uint8_t digit2 = (i < addend.size()) ? addend[addend.size() - 1 - i] : 0;
             uint8_t sum = digit1 + digit2 + carry;
-            ret.push_back(sum % BASE);
+            result.push_back(sum % BASE);
             carry = sum / BASE;
         }
 
         if (carry > 0)
-            ret.push_back(carry);
-        std::reverse(ret.begin(), ret.end());
-        return ret;
+            result.push_back(carry);
+        std::reverse(result.begin(), result.end());
+        return result;
     }
 
     /**
@@ -96,7 +96,7 @@ namespace vint {
      *
      * The time complexity of this function is linear.
      */
-    void int_to_storage(int64_t number, std::vector<uint32_t>& storage) {
+    void ll_to_storage(int64_t number, std::vector<uint32_t>& storage) {
         number = std::abs(number);
         constexpr int64_t storage_base = static_cast<int64_t>(UINT32_MAX) + 1;
 
@@ -131,7 +131,7 @@ namespace vint {
      *
      * The time complexity of this function is linear.
      */
-    void storage_to_int(const std::vector<uint32_t>& storage, int64_t& number, bool negative) {
+    int64_t storage_to_ll(const std::vector<uint32_t>& storage, bool negative) {
         int64_t ret = 0;
         int64_t power = 1;
         for (const auto& digit : storage) {
@@ -139,7 +139,7 @@ namespace vint {
             power *= UINT32_MAX;
         }
 
-        number = (negative) ? -ret : ret;
+        return (negative) ? -ret : ret;
     }
 
     /**
@@ -148,9 +148,10 @@ namespace vint {
      *
      * The time complexity of this function is quadratic.
      */
-    void storage_to_str(const std::vector<uint32_t>& storage, std::string& number, bool negative) {
+    std::string storage_to_str(const std::vector<uint32_t>& storage, bool negative) {
         std::vector<uint8_t> ret = { 0 };
         std::vector<uint8_t> power = { 1 };
+        std::string result = "";
         for (const auto& digit : storage) {
             constexpr uint64_t base = static_cast<uint64_t>(UINT32_MAX) + 1;
             ret = add_arrays(ret, multiply_arrays(power, digit));
@@ -158,8 +159,9 @@ namespace vint {
         }
 
         for (const auto& digit : ret)
-            number += std::to_string(digit);
+            result += std::to_string(digit);
         if (negative)
-            number.insert(number.begin(), '-');
+            result.insert(result.begin(), '-');
+        return result;
     }
 }
