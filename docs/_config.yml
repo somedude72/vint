@@ -27,7 +27,7 @@ plugins:
 
 aux_links:
   "GitHub Repository":
-    - "//github.com/SomedudeX/vint"
+    - "//github.com/somedude72/vint"
 
 # Exclude from processing.
 # The following items will not be processed, by default.
