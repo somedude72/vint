@@ -4,3 +4,6 @@ build-debug/
 .DS_Store
 .idea/
 .ccls-cache/
+main.dSYM/
+main.cpp
+main
