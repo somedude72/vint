@@ -1,9 +1,11 @@
-/// This header provdes the integer class and includes various primitive
-/// math functions under a single header file. Part of the vint project,
-/// which is under the GPL-3.0 License.
-///
-/// For documentation on the API this header file exposes and its usage, please
-/// see the docs at https:///somedude72.github.io/vint/api_reference/integer. 
+// This header provdes the integer class and includes various primitive
+// math functions under a single header file. Part of the vint project,
+// which is distributed under the GPL-3.0 License. 
+//
+// For documentation on the API this header file exposes and its usage, please
+// see the docs at https://somedude72.github.io/vint/api_reference/integer. 
+//
+// Copyright (C) 2026 Zichen <connect@withzichen.com>
 
 #ifndef VINT_INTEGER_HPP
 #define VINT_INTEGER_HPP
