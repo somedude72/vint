@@ -141,9 +141,9 @@ static inline std::string storage_to_str(const storage_t& storage) {
 inline IntRepr to_repr(int64_t num) {
     IntRepr ret;
     if (num < 0)
-        ret.pos = false;
+        ret.positive = false;
     if (num == 0) {
-        ret.pos = true;
+        ret.positive = true;
         ret.limbs = { 0 };
     }
 
@@ -154,9 +154,9 @@ inline IntRepr to_repr(int64_t num) {
 inline IntRepr to_repr(const std::string& num) {
     IntRepr ret;
     if (!num.empty() && num[0] == '-')
-        ret.pos = false;
+        ret.positive = false;
     if (num.empty() || num == "-0") {
-        ret.pos = true;
+        ret.positive = true;
         ret.limbs = { 0 };
     }
 
@@ -170,12 +170,12 @@ inline bool to_bool(const IntRepr& repr) {
 
 inline int64_t to_int(const IntRepr& repr) {
     int64_t ret = storage_to_ll(repr.limbs);
-    return (repr.pos) ? ret : -ret;
+    return (repr.positive) ? ret : -ret;
 }
 
 inline std::string to_str(const IntRepr& repr) {
     std::string ret = storage_to_str(repr.limbs);
-    return (repr.pos) ? ret : '-' + ret;
+    return (repr.positive) ? ret : '-' + ret;
 }
 
 }

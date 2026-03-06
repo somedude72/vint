@@ -11,7 +11,7 @@ namespace vint {
 namespace internal {
 
 inline bool operator==(const IntRepr& lhs, const IntRepr& rhs) {
-    return lhs.pos == rhs.pos && lhs.limbs == rhs.limbs;
+    return lhs.positive == rhs.positive && lhs.limbs == rhs.limbs;
 }
 
 inline bool operator!=(const IntRepr& lhs, const IntRepr& rhs) {
@@ -19,22 +19,22 @@ inline bool operator!=(const IntRepr& lhs, const IntRepr& rhs) {
 }
 
 inline bool operator<(const IntRepr& lhs, const IntRepr& rhs) {
-    if (!lhs.pos && rhs.pos)
+    if (!lhs.positive && rhs.positive)
         return true;
-    if (lhs.pos && !rhs.pos)
+    if (lhs.positive && !rhs.positive)
         return false;
     if (lhs.limbs.size() < rhs.limbs.size())
         return true;
     if (rhs.limbs.size() < lhs.limbs.size())
         return false;
     for (int64_t i = (int64_t) lhs.limbs.size() - 1; i >= 0; i--) {
-        if (lhs.pos && lhs.limbs[i] < rhs.limbs[i])
+        if (lhs.positive && lhs.limbs[i] < rhs.limbs[i])
             return true;
-        if (!lhs.pos && lhs.limbs[i] < rhs.limbs[i])
+        if (!lhs.positive && lhs.limbs[i] < rhs.limbs[i])
             return false;
-        if (!lhs.pos && lhs.limbs[i] > rhs.limbs[i])
+        if (!lhs.positive && lhs.limbs[i] > rhs.limbs[i])
             return true;
-        if (lhs.pos && lhs.limbs[i] > rhs.limbs[i])
+        if (lhs.positive && lhs.limbs[i] > rhs.limbs[i])
             return false;
     }
 

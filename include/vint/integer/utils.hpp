@@ -11,7 +11,7 @@ namespace internal {
 inline IntRepr abs(const IntRepr& val) {
     if (val < to_repr(0)) {
         IntRepr new_val = val;
-        new_val.pos = true;
+        new_val.positive = true;
         return new_val;
     } else {
         return val;
@@ -48,7 +48,7 @@ inline void normalize_zero(IntRepr& val) {
     for (const auto& l : val.limbs)
         if (l != 0) return;
     val.limbs = { 0 };
-    val.pos = true;
+    val.positive = true;
 }
 
 }
