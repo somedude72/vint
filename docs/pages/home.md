@@ -20,7 +20,7 @@ Because this is a header only library, installation is very straightforward. Sim
 $ git clone https://github.com/somedude72/vint
 $ mv vint/include path/to/project/include
 ```
-Now you are ready to use the library. See the example below or read the [tutorial](/tutorial)
+Now you are ready to use the library. See the example below or read the [tutorial](/vint/tutorial)
 
 ```cpp
 #include <iostream>
