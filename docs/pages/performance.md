@@ -11,7 +11,7 @@ permalink: /performance/
 Large numbers, due to their nature, requires more computational power to work
 with. This page will attempt to detail some empirical performance comparisons
 with this library. If you are interested in theoretical performance, see the
-[api reference](/api_reference/) page for details. 
+[API reference](/vint/api_reference/) page for details. 
 
 ## Addition Performance
 
