@@ -8,4 +8,4 @@ permalink: /tutorial/
 
 ## Tutorial
 
-This section is under construction
+[This section is under construction]
