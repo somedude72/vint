@@ -1,3 +1,7 @@
+// This header provdes the internal implementation for the integer class. Do not
+// include this header file on its own. Part of the vint project, which is
+// distributed under the GPL-3.0 License. 
+
 #ifndef VINT_INTEGER_IMPL_UTILS
 #define VINT_INTEGER_IMPL_UTILS
 
