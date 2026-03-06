@@ -63,16 +63,16 @@ static inline storage_t sub_storage(const storage_t& lhs, const storage_t& rhs) 
 inline IntRepr operator+(const IntRepr& lhs, const IntRepr& rhs) {
     IntRepr ret;
 
-    if (!rhs.pos) {
+    if (!rhs.positive) {
         ret = lhs - abs(rhs);
-    } else if (lhs.pos) {
-        ret.pos = true;
+    } else if (lhs.positive) {
+        ret.positive = true;
         ret.limbs = add_storage(lhs.limbs, rhs.limbs);
     } else if (abs(lhs) > abs(rhs)) {
-        ret.pos = false;
+        ret.positive = false;
         ret.limbs = sub_storage(lhs.limbs, rhs.limbs);
     } else if (abs(lhs) < abs(rhs)) {
-        ret.pos = true;
+        ret.positive = true;
         ret.limbs = sub_storage(rhs.limbs, lhs.limbs);
     }
 
@@ -83,16 +83,16 @@ inline IntRepr operator+(const IntRepr& lhs, const IntRepr& rhs) {
 inline IntRepr operator-(const IntRepr& lhs, const IntRepr& rhs) {
     IntRepr ret;
 
-    if (!rhs.pos) {
+    if (!rhs.positive) {
         ret = lhs + abs(rhs);
-    } else if (!lhs.pos) {
-        ret.pos = false;
+    } else if (!lhs.positive) {
+        ret.positive = false;
         ret.limbs = add_storage(lhs.limbs, rhs.limbs);
     } else if (abs(lhs) > abs(rhs)) {
-        ret.pos = true;
+        ret.positive = true;
         ret.limbs = sub_storage(lhs.limbs, rhs.limbs);
     } else if (abs(lhs) < abs(rhs)) {
-        ret.pos = false;
+        ret.positive = false;
         ret.limbs = sub_storage(rhs.limbs, lhs.limbs);
     }
 
@@ -106,7 +106,7 @@ inline IntRepr operator+(const IntRepr& val) {
 
 inline IntRepr operator-(const IntRepr& val) {
     IntRepr ret = val;
-    ret.pos = !val.pos;
+    ret.positive = !val.positive;
     return ret;
 }
 
