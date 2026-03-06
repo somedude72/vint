@@ -8,16 +8,11 @@ permalink: /performance/
 
 ## Performance
 
-Large numbers, due to their nature, requires more computational power to work
-with. This page will attempt to detail some empirical performance comparisons
-with this library. If you are interested in theoretical performance, see the
-[API reference](/vint/api_reference/) page for details. 
+Large numbers, due to their nature, requires more computational power to work with. This page will attempt to detail some empirical performance comparisons with this library. If you are interested in theoretical performance, see the [API reference](/vint/api_reference/) page for details. 
 
 ## Addition Performance
 
-In the following performance test, we are repeatedly adding a variable to itself
-n times, effectively achieving exponential growth ($ 2^n $). We will compare the
-performance of addition between this library and Python using the code snippets below:
+In the following performance test, we are repeatedly adding a variable to itself n times, effectively achieving exponential growth ($ 2^n $). We will compare the performance of addition between this library and Python using the code snippets below:
 
 ```cpp
 #include <chrono>
@@ -39,14 +34,18 @@ int main() {
 ```
 
 ```py
-N = 1000
-a = 1
+def main():
+    N = 1000
+    a = 1
 
-add_beg = time.perf_counter_ns()
-for i in range(N): a += a
-add_end = time.perf_counter_ns()
+    add_beg = time.perf_counter_ns()
+    for i in range(N): a += a
+    add_end = time.perf_counter_ns()
 
-print(f"Addition took {(add_end - add_beg) / 1000:.0f} ms")
+    print(f"Addition took {(add_end - add_beg) / 1000:.0f} ms")
+
+if __name__ == "__main__":
+    main()
 ```
 
 The following chart shows the performance difference between the vint library and Python's int object when N grows. The right most column showcases the performance difference between vint library and Python in percentage (e.g. `+55%` means that the vint library is 55% faster than Python, and `-6.4x` means that vint is 6400% slower than Python). Note the time shown is a winsorized average of 5 test runs.

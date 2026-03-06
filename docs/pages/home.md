@@ -27,15 +27,10 @@ Now you are ready to use the library. See the example below or read the [tutoria
 #include "vint/integer.hpp"
 
 int main() {
-    // initializes a variable int object
     vint::Integer a = 1;
-    for (int i = 0; i < 1024; i++)
-        // double a 1024 times (equivalent of 2^1024)
-        a += a;
-    // prints 'a' by converting it to int64_t
-    std::cout << "int64_t val: " << a.to_long_long() << '\n';
-    // prints 'a' by converting it to std::string (overflow-proof)
-    std::cout << "std::string val: " << a.to_string() << '\n';
+    for (int i = 0; i < 1024; i++) { a = 2 * a; }
+    std::cout << "int: " << a.to_int64() << '\n';
+    std::cout << "str: " << a.to_string() << '\n';
 }
 ```
 
