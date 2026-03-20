@@ -11,7 +11,6 @@
 #include <vector>
 
 #include "base.hpp"
-#include "compare.hpp"
 
 // TODO: Replace all conversion functions with ones based on exponents and
 // division once fast integer exponent and division is implemented. 
@@ -165,7 +164,7 @@ inline IntRepr to_repr(const std::string& num) {
 }
 
 inline bool to_bool(const IntRepr& repr) {
-    return repr != to_repr(0);
+    return !(repr.limbs.size() == 1 && repr.limbs[0] == 0);
 }
 
 inline int64_t to_int(const IntRepr& repr) {

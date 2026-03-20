@@ -26,9 +26,17 @@ namespace internal { struct IntReprAccess; }
 
 class Integer {
 public:
-    Integer() : m_repr(internal::to_repr(0)) { }
-    Integer(const int64_t& num) : m_repr(internal::to_repr(num)) { }
-    explicit Integer(const std::string& num) : m_repr(internal::to_repr(num)) { }
+    Integer() {
+        m_repr = internal::to_repr(0);
+    }
+
+    Integer(const int64_t& num) {
+        m_repr = internal::to_repr(num);
+    }
+
+    explicit Integer(const std::string& num) {
+        m_repr = internal::to_repr(num);
+    }
 
     bool to_bool() const {
         return internal::to_bool(m_repr);
