@@ -63,9 +63,9 @@ Binary comparison operators in $ O(1) $.
 
 ## Math Functions
 
-**`vint::Integer abs(const vint::Integer& val)`**
-**`vint::Integer sgn(const vint::Integer& val)`**
-**`vint::Integer max(const vint::Integer& a, const vint::Integer& b)`**
+**`vint::Integer abs(const vint::Integer& val)`** <br>
+**`vint::Integer sgn(const vint::Integer& val)`** <br>
+**`vint::Integer max(const vint::Integer& a, const vint::Integer& b)`** <br>
 **`vint::Integer min(const vint::Integer& a, const vint::Integer& b)`**
 
 Basic math functions, all in $ O(1) $. These do what you think they do. 
